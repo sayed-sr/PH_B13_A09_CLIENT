@@ -4,9 +4,14 @@ const HomeExtraSections = () => {
 
       {/* EXTRA SECTION 1 */}
       <section className="bg-white p-8 rounded-3xl shadow-sm">
-        <h2 className="text-3xl font-bold mb-3">
+
+
+
+    <h2 className="text-3xl font-bold mb-3">
+      
           Adoption Process
         </h2>
+
 
         <p className="text-gray-600">
           Our adoption process is simple and transparent.
@@ -16,18 +21,24 @@ const HomeExtraSections = () => {
         </p>
       </section>
 
-      {/* EXTRA SECTION 2 */}
+     
+
       <section className="bg-white p-8 rounded-3xl shadow-sm">
         <h2 className="text-3xl font-bold mb-3">
+
+
           Our Mission
         </h2>
 
         <p className="text-gray-600">
+
+
+
           We aim to connect loving families with pets in need
           of a home. Every adoption helps reduce stray animal
           populations and gives pets a second chance at life.
         </p>
-      </section>
+ </section>
 
     </div>
   );

@@ -1,15 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import {Button,Input,Label,Modal,TextArea,TextField,
-} from "@heroui/react";
+import {Button,Input,Label,Modal,TextArea,TextField,} from "@heroui/react";
 
 import toast from "react-hot-toast";
+
 import { authClient } from "@/lib/auth-client";
 
 export default function EditPetModal({ pet }) {
+
   const [open, setOpen] = useState(false);
   const { data: session } = authClient.useSession();
+
   const user = session?.user;
 
   const handleUpdate = async (e) => {
@@ -19,44 +21,58 @@ export default function EditPetModal({ pet }) {
       return toast.error("Only owner can edit this pet");
     }
 
-    const formData = new FormData(e.currentTarget);
-    const updatedPet = Object.fromEntries(formData.entries());
+  const formData = new FormData(e.currentTarget);
+  const updatedPet = Object.fromEntries(formData.entries());
 
     const { data: tokenData } = await authClient.token();
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/pets/${pet._id}`, {
-        method: "PATCH",
-        headers: {
-          "content-type": "application/json",
-          authorization: `Bearer ${tokenData?.token}`,
+     const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/pets/${pet._id}`, {
+    method: "PATCH",
+      headers: {
+        "content-type": "application/json",
+      authorization: `Bearer ${tokenData?.token}`,
+
+
         },
-        body: JSON.stringify(updatedPet),
+  body: JSON.stringify(updatedPet),
       });
 
+      
+      
       const data = await res.json();
 
       if (res.ok) {
-        toast.success("Pet updated successfully");
+    toast.success("Pet updated successfully");
         setOpen(false);
-      } else {
+      } 
+      
+      else {
         toast.error(data?.message || "Update failed");
       }
-    } catch (err) {
+    } 
+    
+    
+    
+    catch (err) {
+      
+      
+      
       toast.error("Server error");
     }
   };
 
   return (
+
     <Modal isOpen={open} onOpenChange={setOpen}>
       <Button
-        onClick={() => setOpen(true)}
+    onClick={() => setOpen(true)}
         className="bg-blue-500 text-white"
       >
         Edit
       </Button>
 
-      <Modal.Backdrop>
+     <Modal.Backdrop>
         <Modal.Container>
           <Modal.Dialog className="sm:max-w-lg">
             <Modal.CloseTrigger />
