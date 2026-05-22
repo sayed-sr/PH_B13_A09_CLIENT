@@ -25,7 +25,7 @@ export default function AllPetsPage() {
       );
 
       const data = await res.json();
-      setPets(Array.isArray(data?.data) ? data.data : []);
+      setPets(Array.isArray(data?.data) ? data.data.filter(p => p.status !== "adopted") : []);
     } catch (err) {
       console.error("Fetch error:", err);
       setPets([]);
@@ -66,9 +66,14 @@ export default function AllPetsPage() {
         Find Your Perfect Pet 🐾
       </h1>
 
-      <p className="text-gray-500 mb-6">
-        Search by name or filter by species to find pets available for adoption.
-      </p>
+     <p className="text-gray-500 mb-6">
+  Search by name and filter by species to find pets available for adoption. <br />
+  The first 10 pets are for demo only.{" "}
+  <Link href="/dashboard/add-pet" className="text-emerald-600 font-semibold underline">
+    Add your own pet
+  </Link>{" "}
+  so others can adopt it.
+</p>
 
       {/* SEARCH + FILTER PANEL */}
       <div className="bg-white border rounded-xl p-4 mb-6 flex flex-col md:flex-row gap-3 md:items-center">
