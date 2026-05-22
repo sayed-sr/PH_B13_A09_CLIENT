@@ -9,7 +9,7 @@ It allows users to browse pets, view details, submit adoption requests, and mana
 
 The frontend connects to a secure Express + MongoDB backend using REST APIs with JWT authentication.
 
- Live URL=> https://your-frontend-live-url.com (update when deployed)
+ Live URL=>https://client-one-nu-59.vercel.app
 
 Features=>
  Browse all available pets with search and category filtering
@@ -57,7 +57,9 @@ Edit / Delete / View actions
 Shows adoption requests
 Cancel request option
 Status tracking (Pending / Approved / Rejected)
-⚙️ Backend Integration
+Backend Integration
+
+
 
 Frontend communicates with backend via REST API:
 
@@ -68,21 +70,5 @@ GET /my-pets/:email
 POST /adoption
 PATCH /adoption/:id
 
-Base URL:
 
-http://localhost:5000
-📱 Responsive Design
-Mobile-first layout
-Fully responsive grid system
-Optimized for:
-Mobile 📱
-Tablet 📟
-Desktop 💻
-⚠️ Important Notes
-No use of alert() (toast notifications used instead)
-All private routes are protected
-Page reload does not break authentication state
-Environment variables required for API URLs
-👨‍💻 Author
 
-Developed as part of a MERN Stack Pet Adoption Platform assignment.
