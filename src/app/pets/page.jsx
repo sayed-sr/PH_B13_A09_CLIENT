@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function AllPetsPage() {
   const [pets, setPets] = useState([]);
@@ -15,17 +16,15 @@ export default function AllPetsPage() {
       setLoading(true);
 
       const query = new URLSearchParams();
-
-      // Only send if values exist
       if (search.trim()) query.append("search", search.trim());
       if (category) query.append("category", category);
-
+      
+      query.append("limit", "100");
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/pets?${query.toString()}`
       );
 
       const data = await res.json();
-
       setPets(Array.isArray(data?.data) ? data.data : []);
     } catch (err) {
       console.error("Fetch error:", err);
@@ -35,9 +34,18 @@ export default function AllPetsPage() {
     }
   };
 
-  // initial load
+  // Refetch whenever the page tab becomes visible again
   useEffect(() => {
     fetchPets();
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        fetchPets();
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
   }, []);
 
   const handleSearch = () => {
@@ -65,7 +73,6 @@ export default function AllPetsPage() {
       {/* SEARCH + FILTER PANEL */}
       <div className="bg-white border rounded-xl p-4 mb-6 flex flex-col md:flex-row gap-3 md:items-center">
 
-        {/* SEARCH INPUT */}
         <input
           type="text"
           placeholder="Search pets by name..."
@@ -74,7 +81,6 @@ export default function AllPetsPage() {
           onChange={(e) => setSearch(e.target.value)}
         />
 
-        {/* CATEGORY FILTER */}
         <select
           className="border p-2 rounded w-full md:w-48"
           value={category}
@@ -87,7 +93,6 @@ export default function AllPetsPage() {
           <option value="Rabbit">Rabbit</option>
         </select>
 
-        {/* ACTION BUTTONS */}
         <div className="flex gap-2">
           <button
             onClick={handleSearch}
@@ -105,26 +110,20 @@ export default function AllPetsPage() {
         </div>
       </div>
 
-      {/* LOADING */}
       {loading && (
-        <p className="text-center py-10 text-gray-500">
-          Loading pets...
-        </p>
+        <p className="text-center py-10 text-gray-500">Loading pets...</p>
       )}
 
-      {/* EMPTY STATE */}
       {!loading && pets.length === 0 && (
         <p className="text-center py-10 text-gray-500">
           No pets found matching your criteria.
         </p>
       )}
 
-      {/* GRID */}
       {!loading && pets.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5">
           {pets.map((pet) => (
             <div key={pet._id} className="border rounded-xl p-3 bg-white">
-
               <Image
                 src={pet.imageUrl}
                 alt={pet.petName}
@@ -132,23 +131,14 @@ export default function AllPetsPage() {
                 height={200}
                 className="h-40 w-full object-cover rounded"
               />
-
               <h2 className="font-bold mt-2">{pet.petName}</h2>
-
-              <p className="text-sm text-gray-500">
-                {pet.category}
-              </p>
-
-              <p className="font-bold text-emerald-600">
-                ${pet.adoptionFee}
-              </p>
-
+              <p className="text-sm text-gray-500">{pet.category}</p>
+              <p className="font-bold text-emerald-600">${pet.adoptionFee}</p>
               <Link href={`/pets/${pet._id}`}>
                 <button className="w-full mt-2 bg-black text-white p-2 rounded">
                   View Details
                 </button>
               </Link>
-
             </div>
           ))}
         </div>
