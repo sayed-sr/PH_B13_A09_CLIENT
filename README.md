@@ -1,5 +1,7 @@
 Please allow at least 5 seconds for the page to load after navigating or clicking any button, as data may still be processing or fetching from the server.
 
+Login to adopt , add-pet,  access listind and requestes
+
 HappyPet (Frontend Application)
 
 Purpose=>
@@ -12,11 +14,11 @@ The frontend connects to a secure Express + MongoDB backend using REST APIs with
  Live URL=>https://client-one-nu-59.vercel.app
 
 Features=>
- Browse all available pets with search and category filtering
-Dynamic featured pets section (fetches from backend API)
- Detailed pet view page with adoption functionality
-Secure authentication system (login/register with JWT support)
-Usr dashboard (My Listings, My Requests)
+ 1. Browse all available pets with search and category filtering
+2. Dynamic featured pets section (fetches from backend API)
+ 3. Detailed pet view page with adoption functionality
+4. Secure authentication system (login/register with JWT support)
+5. Usr dashboard (My Listings, My Requests)
 
 
 NPM Packages Used=>
