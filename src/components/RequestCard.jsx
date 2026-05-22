@@ -10,6 +10,11 @@ import { authClient } from "@/lib/auth-client";
 
 const RequestCard = ({ request }) => {
   const handleCancel = async () => {
+
+
+
+
+
     const { data: tokenData } = await authClient.token();
 
     const res = await fetch(
@@ -17,6 +22,11 @@ const RequestCard = ({ request }) => {
       {
         method: "DELETE",
         headers: {
+
+
+
+
+
           authorization: `Bearer ${tokenData?.token}`,
         },
       }
@@ -37,6 +47,10 @@ if (data.deletedCount > 0) {
 return (
     <div className="border rounded-3xl p-5 flex justify-between items-center">
       <div>
+
+
+
+
      <h2 className="text-2xl font-bold">
     {request.petName}
         </h2>
@@ -47,6 +61,11 @@ return (
 
         <p className="mt-2">
      Status:
+
+
+
+
+
     <span className="font-bold ml-2 capitalize">
             {request.status}
           </span>
@@ -55,6 +74,10 @@ return (
 
       <div className="flex gap-3">
   <Link href={`/pets/${request.petId}`}>
+
+
+
+
        <Button variant="outline">
             View
        </Button>
@@ -69,6 +92,10 @@ return (
 
         <Button
           onClick={handleCancel}
+
+
+
+          
           variant="danger"
         >
           Cancel
